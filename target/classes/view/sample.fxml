@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="412.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.Controller">
+   <children>
+      <TableView fx:id="TabView" layoutX="11.0" layoutY="14.0" prefHeight="351.0" prefWidth="579.0">
+        <columns>
+          <TableColumn fx:id="PersonId" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="PersonFLP" prefWidth="75.0" text="FLP" />
+            <TableColumn fx:id="PersonAge" prefWidth="75.0" text="Age" />
+        </columns>
+      </TableView>
+      <Button layoutX="75.0" layoutY="376.0" mnemonicParsing="false" onAction="#ButtonAdd" prefHeight="25.0" prefWidth="135.0" text="Add" />
+      <Button layoutX="233.0" layoutY="376.0" mnemonicParsing="false" onAction="#ButtonUpdate" prefHeight="25.0" prefWidth="135.0" text="Update" />
+      <Button layoutX="393.0" layoutY="376.0" mnemonicParsing="false" onAction="#ButtonDelete" prefHeight="25.0" prefWidth="142.0" text="Delete" />
+      <Button layoutX="11.0" layoutY="376.0" mnemonicParsing="false" onAction="#refresh" prefHeight="25.0" prefWidth="22.0" text="*" />
+      <Separator layoutX="5.0" layoutY="13.0" orientation="VERTICAL" prefHeight="351.0" prefWidth="9.0" />
+   </children>
+</AnchorPane>
