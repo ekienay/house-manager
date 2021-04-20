@@ -1,8 +1,6 @@
 package controls;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import dao.UserDAO;
 import entity.User;
@@ -19,21 +17,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import service.UserDAOImpl;
 
-public class SingIn {
+public class SignInController {
 
     private User item;
     private final SessionFactory factory = new Configuration().configure().buildSessionFactory();
     ObservableList<User> userObservableList = FXCollections.observableArrayList();
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private TextField loginField;
-
+    
     @FXML
     private Button sing;
 
@@ -49,15 +38,14 @@ public class SingIn {
     @FXML
     void ComboAction(ActionEvent event) {
         User select = Combo.getSelectionModel().getSelectedItem();
-       loginField.setText(String.valueOf(select));
 
     }
 
     @FXML
     void singIn(ActionEvent event) throws IOException {
         for (User user : userObservableList){
-            if (loginField.getText().trim().equals(user.getLogin()) && passwordField.getText().trim().equals(user.getPassword())){
-                Parent root = FXMLLoader.load(getClass().getResource("/view/sample.fxml"));
+            if (String.valueOf(Combo.getValue()).equals(user.getLogin()) && passwordField.getText().trim().equals(user.getPassword())){
+                Parent root = FXMLLoader.load(getClass().getResource("/view/MainPanelWindow.fxml"));
                 Stage stage = new Stage();
                 stage.setTitle("Panel");
                 stage.setScene(new Scene(root));

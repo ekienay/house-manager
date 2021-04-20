@@ -29,8 +29,6 @@ public class AddWindowController {
     @FXML
     private TextField AddAge;
 
-    @FXML
-    private TextField status;
 
 
     @FXML
@@ -39,6 +37,8 @@ public class AddWindowController {
         Person person = new Person();
         person.setFlp(AddFLP.getText());
         person.setAge(Integer.parseInt(AddAge.getText()));
+
+
         PersonDAO personDAO = new PersonDAOImpl(factory);
         personDAO.create(person);
 

@@ -8,7 +8,7 @@ public class Run extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/SingIn.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/SignInWindow.fxml"));
         stage.setTitle("Sign In");
         stage.setScene(new Scene(root));
         stage.show();
