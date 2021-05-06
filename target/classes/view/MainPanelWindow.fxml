@@ -13,8 +13,11 @@
       <TableView fx:id="TabView" layoutX="159.0" layoutY="13.0" prefHeight="351.0" prefWidth="579.0">
         <columns>
           <TableColumn fx:id="PersonId" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="PersonFLP" prefWidth="75.0" text="FLP" />
+          <TableColumn fx:id="PersonFLP" onEditCommit="#Commit" prefWidth="75.0" text="FLP" />
             <TableColumn fx:id="PersonAge" prefWidth="75.0" text="Age" />
+            <TableColumn fx:id="PassID" prefWidth="75.0" text="Passport_ID" />
+            <TableColumn fx:id="PassSeries" prefWidth="75.0" text="Series" />
+            <TableColumn fx:id="PassNumber" prefWidth="75.0" text="Number" />
         </columns>
       </TableView>
       <Button layoutX="15.0" layoutY="34.0" mnemonicParsing="false" onAction="#ButtonAdd" prefHeight="25.0" prefWidth="135.0" text="Add" />
@@ -27,5 +30,6 @@
       <Label layoutX="490.0" layoutY="375.0" text="Save data in PDF" />
       <Label fx:id="pathStatus" layoutX="464.0" layoutY="434.0" prefHeight="17.0" prefWidth="142.0" />
       <TextField fx:id="fileName" layoutX="461.0" layoutY="401.0" promptText="Write file name" />
+      <Button layoutX="14.0" layoutY="452.0" mnemonicParsing="false" onAction="#refresh" text="refresh" />
    </children>
 </AnchorPane>

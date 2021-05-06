@@ -21,6 +21,9 @@ public class Person {
     private String flp;
     @Column (name = "age")
     private int age;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "passport_id", referencedColumnName = "id")
+    private Passport passport;
 
     @Override
     public String toString() {

@@ -38,6 +38,8 @@ public class SignInController {
     @FXML
     void ComboAction(ActionEvent event) {
         User select = Combo.getSelectionModel().getSelectedItem();
+        passwordField.setText(String.valueOf(Combo.getValue().getId()));
+
 
     }
 

@@ -9,8 +9,9 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.sun.source.tree.IfTree;
+import dao.PassportDAO;
 import dao.PersonDAO;
+import entity.Passport;
 import entity.Person;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -24,10 +25,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import service.PassportDAOImpl;
 import service.PersonDAOImpl;
 
 public class MainPanelController {
@@ -38,6 +41,7 @@ public class MainPanelController {
     private final SessionFactory factory = new Configuration().configure().buildSessionFactory();
 
     ObservableList<Person> personObservableList = FXCollections.observableArrayList();
+    ObservableList<Passport> passportObservableList = FXCollections.observableArrayList();
 
     @FXML
     private TableView<Person> TabView;
@@ -50,6 +54,15 @@ public class MainPanelController {
 
     @FXML
     private TableColumn<Person, Integer> PersonAge;
+
+    @FXML
+    private TableColumn<Person, Integer> PassID;
+
+    @FXML
+    private TableColumn<Person, String> PassSeries;
+
+    @FXML
+    private TableColumn<Person, Integer> PassNumber;
 
     @FXML
     private TextField pathField;
@@ -120,15 +133,19 @@ public class MainPanelController {
             PlaceObject(writer, String.valueOf(selectedItem.getId()),50,750);
             PlaceObject(writer, String.valueOf(selectedItem.getFlp()),85,750);
             PlaceObject(writer,String.valueOf(selectedItem.getAge()),250,750);
+            PlaceObject(writer, String.valueOf(selectedItem.getFlp()),130,10);
         }
         document.close();
     }
 
 
     public void initDateBase(){
+        PassportDAO passportDAO = new PassportDAOImpl(factory);
+        List<Passport> passportList = passportDAO.findByAll();
         PersonDAO personDAO = new PersonDAOImpl(factory);
         List<Person> personList = personDAO.findByAll();
         personObservableList.addAll(personList);
+        passportObservableList.addAll(passportList);
     }
 
 
@@ -146,18 +163,39 @@ public class MainPanelController {
         cb.restoreState();
     }
 
+    @FXML
+    void refresh(ActionEvent event) {
+            ref();
+    }
 
+    public void ref(){
+        personObservableList.clear();
+        passportObservableList.clear();
+        initialize();
+    }
 
     @FXML
     void initialize() {
         PersonId.setCellValueFactory(p -> new SimpleObjectProperty<>(p.getValue().getId()));
         PersonFLP.setCellValueFactory(p -> new SimpleObjectProperty<String>(p.getValue().getFlp()));
+        PersonFLP.setCellFactory(TextFieldTableCell.forTableColumn());
         PersonAge.setCellValueFactory(p -> new SimpleObjectProperty<Integer>(p.getValue().getAge()));
+        PassID.setCellValueFactory(p -> new SimpleObjectProperty<>(p.getValue().getPassport().getId()));
+        PassSeries.setCellValueFactory(p -> new SimpleObjectProperty<String>(p.getValue().getPassport().getSeries()));
+        PassNumber.setCellValueFactory(p -> new SimpleObjectProperty<Integer>(p.getValue().getPassport().getNumber()));
         TabView.setItems(personObservableList);
         TabView.getSelectionModel().selectedItemProperty().addListener(
                 (obj, oldValue, newValue) -> selectedItem = newValue);
         TabView.setEditable(true);
 
         initDateBase();
+    }
+
+
+    public void Commit(TableColumn.CellEditEvent<Person, String> personIntegerCellEditEvent) {
+        PersonDAO personDAO = new PersonDAOImpl(factory);
+        Person person = TabView.getSelectionModel().getSelectedItem();
+        person.setFlp(personIntegerCellEditEvent.getNewValue());
+        personDAO.update(person);
     }
 }

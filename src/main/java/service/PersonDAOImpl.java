@@ -50,7 +50,9 @@ public class PersonDAOImpl implements PersonDAO {
     @SuppressWarnings("unchecked")
     public List<Person> findByAll() {
         try(Session session = factory.openSession()){
-        List<Person> personList = session.createQuery("From Person").list();
+            session.beginTransaction();
+        List<Person> personList = session.createQuery("select per from Person per inner join per.passport").list();
+        session.getTransaction().commit();
         session.close();
         return personList;
         }
