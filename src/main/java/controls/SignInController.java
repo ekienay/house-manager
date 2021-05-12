@@ -35,6 +35,8 @@ public class SignInController {
     @FXML
     private Label status;
 
+    public static String role;
+
     @FXML
     void ComboAction(ActionEvent event) {
         User select = Combo.getSelectionModel().getSelectedItem();
@@ -47,6 +49,7 @@ public class SignInController {
     void singIn(ActionEvent event) throws IOException {
         for (User user : userObservableList){
             if (String.valueOf(Combo.getValue()).equals(user.getLogin()) && passwordField.getText().trim().equals(user.getPassword())){
+                role = user.getRole();
                 Parent root = FXMLLoader.load(getClass().getResource("/view/MainPanelWindow.fxml"));
                 Stage stage = new Stage();
                 stage.setTitle("Panel");

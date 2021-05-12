@@ -8,16 +8,22 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="226.0" prefWidth="347.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.SignInController">
+<AnchorPane prefHeight="221.0" prefWidth="347.0" styleClass="sign-window" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.SignInController">
    <children>
-      <Text layoutX="145.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign in">
+      <Text layoutX="145.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sign-text" text="Sign in">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <Button fx:id="sing" layoutX="146.0" layoutY="157.0" mnemonicParsing="false" onAction="#singIn" text="Sign in!" />
-      <ComboBox fx:id="Combo" layoutX="100.0" layoutY="70.0" onAction="#ComboAction" prefHeight="25.0" prefWidth="149.0" />
-      <PasswordField fx:id="passwordField" layoutX="100.0" layoutY="107.0" promptText="password" />
-      <Label fx:id="status" layoutX="51.0" layoutY="198.0" prefHeight="17.0" prefWidth="237.0" textFill="#fc0000" />
+      <Button fx:id="sing" layoutX="144.0" layoutY="147.0" mnemonicParsing="false" onAction="#singIn" styleClass="sign-button" stylesheets="@../style/style.css" text="Sign in!">
+         <font>
+            <Font name="Gadugi Bold" size="12.0" />
+         </font></Button>
+      <ComboBox fx:id="Combo" layoutX="95.0" layoutY="66.0" onAction="#ComboAction" prefHeight="25.0" prefWidth="159.0" promptText="User" styleClass="sign-combo" stylesheets="@../style/style.css" />
+      <PasswordField fx:id="passwordField" layoutX="94.0" layoutY="101.0" promptText="password" styleClass="sign-pass" stylesheets="@../style/style.css">
+         <font>
+            <Font name="Gadugi Bold" size="12.0" />
+         </font></PasswordField>
+      <Label fx:id="status" layoutX="119.0" layoutY="183.0" prefHeight="17.0" prefWidth="112.0" textFill="#fc0000" />
    </children>
 </AnchorPane>

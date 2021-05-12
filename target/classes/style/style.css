@@ -1,0 +1,106 @@
+.table-view{
+ -fx-background-color: transparent;
+}
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+.table-view .column-header-background{
+    -fx-background-color: linear-gradient(to bottom, #1dbbdd44, #93f9b944);
+    -fx-background-radius: 7px 7px 0px 0px;
+    -fx-background-insets: 0 11px 0 0;
+    -fx-padding: 0 0 0 0;
+}
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+.table-view .table-cell{
+    -fx-border-color: transparent;
+    -fx-padding: 2 0 2 0px;
+}
+.table-row-cell: hover {
+    -fx-background-color: #93f9b911;
+    -fx-text-background-color: red;
+}
+.table-row-cell: odd{
+    -fx-background-color: #93f9b911;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+.table-row-cell: even{
+    -fx-background-color: #1dbbdd11;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+.table-row-cell: highlighted {
+    -fx-background-color: #81c483;
+    -fx-background-radius: 15px;
+}
+.anchor-pane{
+    -fx-background-image:url('/images/background.jpg');
+}
+.button-refresh{
+    -fx-background-color: linear-gradient(to bottom, #1dbbdd44, #93f9b944);
+}
+.button-add{
+    -fx-background-color: linear-gradient(to bottom, #1dbbdd44, #93f9b944);
+}
+.button-delete{
+    -fx-background-color: linear-gradient(to bottom, #1dbbdd44, #93f9b944);
+}
+.button-refresh: hover{
+    -fx-background-color: #81c483;
+}
+.button-add: hover{
+    -fx-background-color: #81c483;
+}
+.button-delete: hover{
+    -fx-background-color: #81c483;
+}
+.button-path{
+    -fx-background-color: linear-gradient(to bottom, #1dbbdd44, #93f9b944);
+}
+.button-to-pdf{
+    -fx-background-color: linear-gradient(to bottom, #1dbbdd44, #93f9b944);
+}
+.button-path: hover{
+    -fx-background-color: #81c483;
+}
+.button-to-pdf: hover{
+    -fx-background-color: #81c483;
+}
+.text{
+    -fx-background-color: linear-gradient(to bottom, #1dbbdd44, #93f9b944);
+}
+.set-dir{
+    -fx-background-color: linear-gradient(to bottom, #1dbbdd44, #93f9b944);
+}
+.file-name{
+    -fx-background-color: linear-gradient(to bottom, #1dbbdd44, #93f9b944);
+}
+.sign-window{
+    -fx-background-image:url('/images/background.jpg');
+}
+.sign-text{
+    -fx-background-color: linear-gradient(to bottom, #1dbbdd44, #93f9b944);
+}
+.sign-combo{
+    -fx-background-color: linear-gradient(to bottom, #1dbbdd44, #93f9b944);
+}
+.sign-pass{
+    -fx-background-color: linear-gradient(to bottom, #1dbbdd44, #93f9b944);
+}
+.sign-button{
+    -fx-background-color: linear-gradient(to bottom, #1dbbdd44, #93f9b944);
+}
+.sign-button: hover{
+    -fx-background-color: #81c483;
+}
+.back-to-signIn{
+    -fx-background-color: linear-gradient(to bottom, #1dbbdd44, #93f9b944);
+}
+.back-to-signIn: hover{
+     -fx-background-color: #81c483;
+}

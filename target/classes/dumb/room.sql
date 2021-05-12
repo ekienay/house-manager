@@ -16,6 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `passport`
+--
+
+DROP TABLE IF EXISTS `passport`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `passport` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `series` varchar(45) NOT NULL,
+  `number` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `passport`
+--
+
+LOCK TABLES `passport` WRITE;
+/*!40000 ALTER TABLE `passport` DISABLE KEYS */;
+INSERT INTO `passport` VALUES (3,'21212',1221),(8,'2215',437258);
+/*!40000 ALTER TABLE `passport` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `person`
 --
 
@@ -26,8 +51,11 @@ CREATE TABLE `person` (
   `id` int NOT NULL AUTO_INCREMENT,
   `FLP` varchar(255) NOT NULL,
   `age` int NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8;
+  `passport_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_person_passport_idx` (`passport_id`),
+  CONSTRAINT `fk_person_passport` FOREIGN KEY (`passport_id`) REFERENCES `passport` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +64,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES (59,'Roma ',20);
+INSERT INTO `person` VALUES (61,'Миронова Марина Олеговна',17,3),(68,'Миронов Роман Дмитриевич',19,8);
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -51,6 +79,7 @@ CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `login` varchar(20) NOT NULL,
   `password` varchar(12) NOT NULL,
+  `role` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -61,7 +90,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Roma','1'),(2,'YAr','2');
+INSERT INTO `users` VALUES (1,'Admin','1','admin'),(2,'User','2','user');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -74,4 +103,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-19 20:03:31
+-- Dump completed on 2021-05-12  3:13:49

@@ -5,8 +5,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="270.0" prefWidth="333.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.AddWindowController">
+<AnchorPane prefHeight="270.0" prefWidth="563.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controls.AddWindowController">
    <children>
       <TextField fx:id="AddFLP" layoutX="148.0" layoutY="37.0" promptText="press add some name!" />
       <TextField fx:id="AddAge" layoutX="148.0" layoutY="83.0" promptText="what is age?" />
@@ -15,5 +16,10 @@
       <Label layoutX="58.0" layoutY="87.0" text="Age" />
       <Label layoutX="55.0" layoutY="127.0" text="Passport_ID" />
       <ComboBox fx:id="AddPass" layoutX="148.0" layoutY="123.0" prefWidth="150.0" />
+      <TextField fx:id="passSeries" layoutX="393.0" layoutY="37.0" promptText="passport series" />
+      <TextField fx:id="passNumber" layoutX="393.0" layoutY="83.0" promptText="passport number" />
+      <Button layoutX="442.0" layoutY="123.0" mnemonicParsing="false" onAction="#AddPassport" text="Add" />
+      <Text layoutX="337.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Series" />
+      <Text layoutX="331.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number" />
    </children>
 </AnchorPane>

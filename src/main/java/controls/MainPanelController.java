@@ -21,13 +21,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import service.PassportDAOImpl;
@@ -53,7 +51,7 @@ public class MainPanelController {
     private TableColumn<Person, String> PersonFLP;
 
     @FXML
-    private TableColumn<Person, Integer> PersonAge;
+    private TableColumn<Person,Integer> PersonAge;
 
     @FXML
     private TableColumn<Person, Integer> PassID;
@@ -72,6 +70,16 @@ public class MainPanelController {
 
     @FXML
     private TextField fileName;
+
+    @FXML
+    private Button add;
+
+    @FXML
+    private Button back;
+
+    @FXML
+    private Button dl;
+
 
     @FXML
     void ButtonAdd(ActionEvent event) throws IOException {
@@ -93,18 +101,6 @@ public class MainPanelController {
             TabView.getItems().remove(person);
             personDAO.delete(person);
         }
-    }
-
-    @FXML
-    void ButtonUpdate(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UpdateWindow.fxml"));
-        Parent root = loader.load();
-        stage.setTitle("Update Window");
-        stage.setScene(new Scene(root));
-        stage.show();
-        UpdateWindowController updateWindowController = loader.getController();
-        updateWindowController.setData(selectedItem);
     }
 
     @FXML
@@ -136,6 +132,16 @@ public class MainPanelController {
             PlaceObject(writer, String.valueOf(selectedItem.getFlp()),130,10);
         }
         document.close();
+    }
+
+    @FXML
+    void backToSignIn(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/view/SignInWindow.fxml"));
+        Stage stage1 = new Stage();
+        stage1.setTitle("Sign In");
+        stage1.setScene(new Scene(root));
+        stage1.show();
+        back.getScene().getWindow().hide();
     }
 
 
@@ -176,12 +182,38 @@ public class MainPanelController {
 
     @FXML
     void initialize() {
+        if (SignInController.role.equals("user")){
+            add.setVisible(false);
+            dl.setVisible(false);
+        }
+
         PersonId.setCellValueFactory(p -> new SimpleObjectProperty<>(p.getValue().getId()));
         PersonFLP.setCellValueFactory(p -> new SimpleObjectProperty<String>(p.getValue().getFlp()));
         PersonFLP.setCellFactory(TextFieldTableCell.forTableColumn());
+        PersonFLP.setOnEditCommit(event ->{
+            String newValue = event.getNewValue();
+            Person person = event.getRowValue();
+            person.setFlp(newValue);
+            PersonDAO personDAO = new PersonDAOImpl(factory);
+            personDAO.update(person);
+        });
         PersonAge.setCellValueFactory(p -> new SimpleObjectProperty<Integer>(p.getValue().getAge()));
-        PassID.setCellValueFactory(p -> new SimpleObjectProperty<>(p.getValue().getPassport().getId()));
+        PersonAge.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        PersonAge.setOnEditCommit(event ->{
+            Integer newValue = event.getNewValue();
+            Person person = event.getRowValue();
+            person.setAge(newValue);
+            PersonDAO personDAO = new PersonDAOImpl(factory);
+            personDAO.update(person);
+        });
         PassSeries.setCellValueFactory(p -> new SimpleObjectProperty<String>(p.getValue().getPassport().getSeries()));
+        PassSeries.setCellFactory(TextFieldTableCell.forTableColumn());
+        PassSeries.setOnEditCommit(event -> {
+            String newValue = event.getNewValue();
+            Person person = event.getRowValue();
+            PersonDAO personDAO = new PersonDAOImpl(factory);
+            personDAO.update(person);
+        });
         PassNumber.setCellValueFactory(p -> new SimpleObjectProperty<Integer>(p.getValue().getPassport().getNumber()));
         TabView.setItems(personObservableList);
         TabView.getSelectionModel().selectedItemProperty().addListener(
@@ -189,13 +221,5 @@ public class MainPanelController {
         TabView.setEditable(true);
 
         initDateBase();
-    }
-
-
-    public void Commit(TableColumn.CellEditEvent<Person, String> personIntegerCellEditEvent) {
-        PersonDAO personDAO = new PersonDAOImpl(factory);
-        Person person = TabView.getSelectionModel().getSelectedItem();
-        person.setFlp(personIntegerCellEditEvent.getNewValue());
-        personDAO.update(person);
     }
 }
