@@ -51,10 +51,11 @@ public class PersonDAOImpl implements PersonDAO {
     public List<Person> findByAll() {
         try(Session session = factory.openSession()){
             session.beginTransaction();
-        List<Person> personList = session.createQuery("select per from Person per inner join per.passport").list();
+        List<Person> personList = session.createQuery("from Person").list();
         session.getTransaction().commit();
         session.close();
         return personList;
         }
     }
 }
+//    select per from Person per inner join per.passport

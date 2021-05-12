@@ -34,7 +34,6 @@ import service.PersonDAOImpl;
 public class MainPanelController {
 
     private Person selectedItem;
-    private Stage stage;
 
     private final SessionFactory factory = new Configuration().configure().buildSessionFactory();
 
@@ -52,9 +51,6 @@ public class MainPanelController {
 
     @FXML
     private TableColumn<Person,Integer> PersonAge;
-
-    @FXML
-    private TableColumn<Person, Integer> PassID;
 
     @FXML
     private TableColumn<Person, String> PassSeries;
@@ -106,6 +102,7 @@ public class MainPanelController {
     @FXML
     void path(ActionEvent event) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
+        Stage stage = new Stage();
         File dir = directoryChooser.showDialog(stage);
         if (dir == null){
             pathStatus.setText("Directory path is empty");
@@ -126,10 +123,11 @@ public class MainPanelController {
         if(selectedItem == null){
             System.out.println("selected item is empty");
         }else {
-            PlaceObject(writer, String.valueOf(selectedItem.getId()),50,750);
-            PlaceObject(writer, String.valueOf(selectedItem.getFlp()),85,750);
-            PlaceObject(writer,String.valueOf(selectedItem.getAge()),250,750);
-            PlaceObject(writer, String.valueOf(selectedItem.getFlp()),130,10);
+            PlaceObject(writer,"ID: "+selectedItem.getId(),50,750);
+            PlaceObject(writer,"Full name: "+selectedItem.getFlp(),85,750);
+            PlaceObject(writer,"Age: "+selectedItem.getAge(),300,750);
+            PlaceObject(writer,"Passport series: "+selectedItem.getPassport().getSeries(),350,750);
+            PlaceObject(writer,"Passport number: "+selectedItem.getPassport().getNumber(),450,750);
         }
         document.close();
     }
@@ -137,10 +135,10 @@ public class MainPanelController {
     @FXML
     void backToSignIn(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/SignInWindow.fxml"));
-        Stage stage1 = new Stage();
-        stage1.setTitle("Sign In");
-        stage1.setScene(new Scene(root));
-        stage1.show();
+        Stage stage = new Stage();
+        stage.setTitle("Sign In");
+        stage.setScene(new Scene(root));
+        stage.show();
         back.getScene().getWindow().hide();
     }
 
@@ -154,10 +152,60 @@ public class MainPanelController {
         passportObservableList.addAll(passportList);
     }
 
+    public void initTableView(){
+        PersonId.setCellValueFactory(p -> new SimpleObjectProperty<>(p.getValue().getId()));
+        PersonFLP.setCellValueFactory(p -> new SimpleObjectProperty<>(p.getValue().getFlp()));
+        PersonFLP.setCellFactory(TextFieldTableCell.forTableColumn());
+        PersonFLP.setOnEditCommit(event ->{
+            String newValue = event.getNewValue();
+            Person person = event.getRowValue();
+            person.setFlp(newValue);
+            PersonDAO personDAO = new PersonDAOImpl(factory);
+            personDAO.update(person);
+        });
+        PersonAge.setCellValueFactory(p -> new SimpleObjectProperty<>(p.getValue().getAge()));
+        PersonAge.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        PersonAge.setOnEditCommit(event ->{
+            Integer newValue = event.getNewValue();
+            Person person = event.getRowValue();
+            person.setAge(newValue);
+            PersonDAO personDAO = new PersonDAOImpl(factory);
+            personDAO.update(person);
+        });
+        PassSeries.setCellValueFactory(p -> new SimpleObjectProperty<>(p.getValue().getPassport().getSeries()));
+        PassSeries.setCellFactory(TextFieldTableCell.forTableColumn());
+        PassSeries.setOnEditCommit(event -> {
+            String newValue = event.getNewValue();
+            Person person = event.getRowValue();
+            person.getPassport().setSeries(newValue);
+            PersonDAO personDAO = new PersonDAOImpl(factory);
+            personDAO.update(person);
+        });
+        PassNumber.setCellValueFactory(p -> new SimpleObjectProperty<>(p.getValue().getPassport().getNumber()));
+        PassNumber.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        PassNumber.setOnEditCommit(event -> {
+            Integer number = event.getNewValue();
+            Person person = event.getRowValue();
+            person.getPassport().setNumber(number);
+            PersonDAO personDAO = new PersonDAOImpl(factory);
+            personDAO.update(person);
+        });
+        TabView.setItems(personObservableList);
+        TabView.getSelectionModel().selectedItemProperty().addListener(
+                (obj, oldValue, newValue) -> selectedItem = newValue);
+        TabView.setEditable(true);
+    }
+
+    public void sign(){
+        if (SignInController.role.equals("user")){
+            add.setVisible(false);
+            dl.setVisible(false);
+        }
+    }
+
 
     public void PlaceObject(PdfWriter writer, String object, int x, int y) throws IOException, DocumentException {
         BaseFont bf = BaseFont.createFont("C:\\Windows\\Fonts/Calibri.ttf",BaseFont.IDENTITY_H,BaseFont.EMBEDDED);
-        Font font = new Font(bf);
 
         PdfContentByte cb = writer.getDirectContent();
         cb.saveState();
@@ -182,44 +230,8 @@ public class MainPanelController {
 
     @FXML
     void initialize() {
-        if (SignInController.role.equals("user")){
-            add.setVisible(false);
-            dl.setVisible(false);
-        }
-
-        PersonId.setCellValueFactory(p -> new SimpleObjectProperty<>(p.getValue().getId()));
-        PersonFLP.setCellValueFactory(p -> new SimpleObjectProperty<String>(p.getValue().getFlp()));
-        PersonFLP.setCellFactory(TextFieldTableCell.forTableColumn());
-        PersonFLP.setOnEditCommit(event ->{
-            String newValue = event.getNewValue();
-            Person person = event.getRowValue();
-            person.setFlp(newValue);
-            PersonDAO personDAO = new PersonDAOImpl(factory);
-            personDAO.update(person);
-        });
-        PersonAge.setCellValueFactory(p -> new SimpleObjectProperty<Integer>(p.getValue().getAge()));
-        PersonAge.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        PersonAge.setOnEditCommit(event ->{
-            Integer newValue = event.getNewValue();
-            Person person = event.getRowValue();
-            person.setAge(newValue);
-            PersonDAO personDAO = new PersonDAOImpl(factory);
-            personDAO.update(person);
-        });
-        PassSeries.setCellValueFactory(p -> new SimpleObjectProperty<String>(p.getValue().getPassport().getSeries()));
-        PassSeries.setCellFactory(TextFieldTableCell.forTableColumn());
-        PassSeries.setOnEditCommit(event -> {
-            String newValue = event.getNewValue();
-            Person person = event.getRowValue();
-            PersonDAO personDAO = new PersonDAOImpl(factory);
-            personDAO.update(person);
-        });
-        PassNumber.setCellValueFactory(p -> new SimpleObjectProperty<Integer>(p.getValue().getPassport().getNumber()));
-        TabView.setItems(personObservableList);
-        TabView.getSelectionModel().selectedItemProperty().addListener(
-                (obj, oldValue, newValue) -> selectedItem = newValue);
-        TabView.setEditable(true);
-
+        sign();
         initDateBase();
+        initTableView();
     }
 }
