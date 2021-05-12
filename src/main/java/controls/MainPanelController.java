@@ -23,6 +23,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
@@ -83,6 +84,7 @@ public class MainPanelController {
         Stage stage = new Stage();
         stage.setTitle("Add Person");
         stage.setScene(new Scene(root));
+        stage.getIcons().add(new Image("/images/icon.png"));
         stage.show();
     }
 
@@ -103,6 +105,7 @@ public class MainPanelController {
     void path(ActionEvent event) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         Stage stage = new Stage();
+        stage.getIcons().add(new Image("/images/icon.png"));
         File dir = directoryChooser.showDialog(stage);
         if (dir == null){
             pathStatus.setText("Directory path is empty");
@@ -138,6 +141,7 @@ public class MainPanelController {
         Stage stage = new Stage();
         stage.setTitle("Sign In");
         stage.setScene(new Scene(root));
+        stage.getIcons().add(new Image("/images/icon.png"));
         stage.show();
         back.getScene().getWindow().hide();
     }

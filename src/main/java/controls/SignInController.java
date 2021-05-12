@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -53,6 +54,7 @@ public class SignInController {
                 Stage stage = new Stage();
                 stage.setTitle("Panel");
                 stage.setScene(new Scene(root));
+                stage.getIcons().add(new Image("/images/icon.png"));
                 stage.show();
                 sing.getScene().getWindow().hide();
             }else {
